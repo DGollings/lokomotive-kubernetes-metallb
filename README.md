@@ -11,7 +11,7 @@ locals {
 }
 
 module "metallb" {
-  source = "./metallb"
+  source = "git::https://github.com/DGollings/lokomotive-kubernetes-metallb.git?ref=master"
 
   project_id            = local.project_id
   facility              = local.facility
