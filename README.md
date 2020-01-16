@@ -1,6 +1,6 @@
 # lokomotive-kubernetes-metallb
 
-First of all, thanks packet for the [tutorial](https://github.com/packet-labs/kubernetes-bgp)
+First of all, thanks packet for the [tutorial](https://github.com/packet-labs/kubernetes-bgp)  
 
 Configures the default Calico backed Lokomotive Kubernets project to use Metallb for ingress on Packet.net bare metal hosts
 
