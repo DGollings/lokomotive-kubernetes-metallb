@@ -1,0 +1,28 @@
+{
+    "spec": {
+        "template": {
+            "spec": {
+                "containers": [
+                    {
+                        "name": "calico-node",
+                        "volumeMounts": [
+                            {
+                                "name": "bird-template",
+                                "subPath": "bird.cfg.template",
+                                "mountPath": "/etc/calico/confd/templates/bird.cfg.template"
+                            }
+                        ]
+                    }
+                ],
+                "volumes": [
+                    {
+                        "configMap": {
+                            "name": "calico-metallb-bird"
+                        },
+                        "name": "bird-template"
+                    }
+                ]
+            }
+        }
+    }
+}

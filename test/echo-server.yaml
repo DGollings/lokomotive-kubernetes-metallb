@@ -1,0 +1,110 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: echoserver
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: echoserver
+  namespace: echoserver
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: echoserver
+  template:
+    metadata:
+      labels:
+        app: echoserver
+    spec:
+      containers:
+        - image: gcr.io/google_containers/echoserver:1.0
+          imagePullPolicy: Always
+          name: echoserver
+          ports:
+            - containerPort: 8080
+      serviceAccountName: echoserver
+      securityContext:
+        runAsNonRoot: false
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: echoserver
+  namespace: echoserver
+  annotations:
+    echoserver.universe.tf/address-pool: packet-public
+spec:
+  ports:
+    - port: 80
+      targetPort: 8080
+      protocol: TCP
+  selector:
+    app: echoserver
+  type: LoadBalancer
+---
+apiVersion: policy/v1beta1
+kind: PodSecurityPolicy
+metadata:
+  labels:
+    app: echoserver
+  name: echoserver
+  namespace: echoserver
+spec:
+  allowPrivilegeEscalation: false
+  allowedCapabilities:
+  - NET_ADMIN
+  - NET_RAW
+  - SYS_ADMIN
+  fsGroup:
+    rule: RunAsAny
+  privileged: false
+  runAsUser:
+    rule: RunAsAny
+  seLinux:
+    rule: RunAsAny
+  supplementalGroups:
+    rule: RunAsAny
+  volumes:
+    - secret
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  labels:
+    app: echoserver
+  name: echoserver
+  namespace: echoserver
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  labels:
+    app: echoserver
+  name: echoserver
+  namespace: echoserver
+rules:
+- apiGroups:
+  - extensions
+  resourceNames:
+  - echoserver
+  resources:
+  - podsecuritypolicies
+  verbs:
+  - use
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  labels:
+    app: echoserver
+  name: echoserver:echoserver
+  namespace: echoserver
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: echoserver
+subjects:
+- kind: ServiceAccount
+  name: echoserver
