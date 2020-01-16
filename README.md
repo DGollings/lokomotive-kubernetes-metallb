@@ -23,14 +23,17 @@ module "metallb" {
 ```
 
 For testing, you can apply the echo server in the `test` directory  
-`kubectl apply -f test/echo-server.yaml`
+`kubectl apply -f test/echo-server.yaml`  
 followed by:  
-`kubectl get service -n echoserver`
-```NAME         TYPE           CLUSTER-IP     EXTERNAL-IP    PORT(S)        AGE
-echoserver   LoadBalancer   10.3.220.254   147.75.84.66   80:32490/TCP   8s```
+`kubectl get service -n echoserver`  
+```
+NAME         TYPE           CLUSTER-IP     EXTERNAL-IP    PORT(S)        AGE
+echoserver   LoadBalancer   10.3.220.254   147.75.84.66   80:32490/TCP   8s
+```
 
 should result (after a few seconds) in:  
-```curl 147.75.84.66
+```
+curl 147.75.84.66
 CLIENT VALUES:
 client_address=('10.2.232.0', 44684) (10.2.232.0)
 command=GET
