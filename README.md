@@ -2,7 +2,7 @@
 
 First of all, thanks packet for the [tutorial](https://github.com/packet-labs/kubernetes-bgp)  
 
-Configures the default Calico backed Lokomotive Kubernets project to use Metallb for ingress on Packet.net bare metal hosts
+Configures the default Calico backed Lokomotive Kubernetes project to use Metallb for ingress on Packet.net bare metal hosts
 
 Basically, follow this tutorial [getting started](https://github.com/kinvolk/lokomotive-kubernetes/blob/master/docs/flatcar-linux/packet.md)
 
