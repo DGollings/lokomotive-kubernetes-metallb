@@ -2,11 +2,11 @@
 
 First of all, thanks packet for the [tutorial](https://github.com/packet-labs/kubernetes-bgp)  
 
-Configures the default [Lokomotive Kubernetes](https://github.com/kinvolk/lokomotive-kubernetes) Packet installation (with default Calico networking) to use [Metallb](https://metallb.universe.tf/) for ingress on Packet.net bare metal hosts
+Configures the default [Lokomotive Kubernetes Packet](https://github.com/kinvolk/lokomotive-kubernetes) installation (with default Calico networking) to use [Metallb](https://metallb.universe.tf/) for ingress on Packet.net bare metal hosts
 
-Basically, follow this tutorial [getting started](https://github.com/kinvolk/lokomotive-kubernetes/blob/master/docs/flatcar-linux/packet.md)
+Basically, follow this [tutorial](https://github.com/kinvolk/lokomotive-kubernetes/blob/master/docs/flatcar-linux/packet.md)
 
-and add the following at the bottom of your main.tf  
+and add the following at the bottom of your personal main.tf:  
 ```
 locals {
   asset_dir    = "/path/to/lokomotive/asset_dir"
@@ -24,7 +24,7 @@ module "metallb" {
 }
 ```
 
-For testing, you can apply the echo server in the `test` directory  
+For testing, you can apply the echo server in the `test` directory:  
 `kubectl apply -f test/echo-server.yaml`  
 followed by:  
 `kubectl get service -n echoserver`  
@@ -33,7 +33,7 @@ NAME         TYPE           CLUSTER-IP     EXTERNAL-IP    PORT(S)        AGE
 echoserver   LoadBalancer   10.3.220.254   147.75.84.66   80:32490/TCP   8s
 ```
 
-should result (after a few seconds) in:  
+take the value under EXTERNAL-IP and sending an HTTP request should result (once the pods have started) in:  
 `curl 147.75.84.66`  
 ```
 CLIENT VALUES:
