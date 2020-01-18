@@ -1,10 +1,10 @@
 #!/bin/bash
 
-if ! -x $KUBECTL; then
-	echo $KUBECTL not found or executable
+if [ ! -x $KUBECTL ]; then
+  echo $KUBECTL not found or executable
 fi
-if ! -f $KUBECONFIG; then
-	echo $KUBECONFIG not found
+if [ ! -f $KUBECONFIG ]; then
+  echo $KUBECONFIG not found
 fi
 
 # Wait for kubernetes to be ready before continuing
