@@ -13,7 +13,7 @@ while ! $KUBECTL --kubeconfig $KUBECONFIG get nodes 2>/dev/null | grep -v NotRea
   if $KUBECTL --kubeconfig $KUBECONFIG get nodes 2>/dev/null | grep 'no such host'; then
     sleep 20
   # but start announcing yourself when nodes are getting ready
-  elif ! $KUBECTL --kubeconfig $KUBECONFIG get nodes 2>/dev/null | grep -v NotReady; then
+  elif $KUBECTL --kubeconfig $KUBECONFIG get nodes 2>/dev/null | grep NotReady >/dev/null; then
     sleep 5 && echo Waiting for Kubernetes nodes to be ready
   fi
 done
