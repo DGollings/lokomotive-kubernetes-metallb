@@ -2,9 +2,11 @@
 
 if [ ! -x $KUBECTL ]; then
   echo $KUBECTL not found or executable
+  exit 1
 fi
 if [ ! -f $KUBECONFIG ]; then
   echo $KUBECONFIG not found
+  exit 1
 fi
 
 # Wait for kubernetes to be ready before continuing
