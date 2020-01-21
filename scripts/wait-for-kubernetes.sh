@@ -22,10 +22,12 @@ while :; do
   elif $KUBECTL get nodes >/dev/null 2>&1; then
     NODES=$($KUBECTL get nodes -o json 2>/dev/null | jq -r '.items[].metadata.name' | wc -l)
     NODES_READY=$($KUBECTL get nodes -o json 2>/dev/null | jq -r '.items[].status.conditions[] | select(.reason == "KubeletReady") | .type' | wc -l)
-    if ((NODES_READY == NODES)); then
-      break
-    else
-      sleep 5 && echo Waiting for Kubernetes nodes to be ready
+    if ((NODES > 0)); then
+      if ((NODES_READY == NODES)); then
+        break
+      else
+        sleep 5 && echo Waiting for Kubernetes nodes to be ready
+      fi
     fi
   fi
 done
