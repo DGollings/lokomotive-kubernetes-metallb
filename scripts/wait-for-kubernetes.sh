@@ -1,9 +1,13 @@
 #!/bin/bash
 
 if [ ! -x "$KUBECTL" ]; then
-  echo "$KUBECTL" not found or executable
+  echo kubectl not found or executable. Value: "${KUBECTL}"
   exit 1
 fi
+if [ ! -f "$KUBECONFIG" ]; then
+  echo kubeconfig not found. Value: "${KUBECONFIG}"
+fi
+
 for ((i = 0; i < 30; i++)); do
   if [ ! -f "$KUBECONFIG" ]; then
     echo "$KUBECONFIG" not found.
